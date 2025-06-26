@@ -1,66 +1,394 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RestFull API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Project UAS Beckend membuat RestFull API menggunakan Laravel Version 10.x
 
-## About Laravel
+## Anggot Kelompok
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   [@GungNanda-230040028](https://www.github.com/zeppyx13)
+-   [@Oka-230040018](https://www.github.com/tuoka16)
+-   [@Dewa-230040026](https://www.github.com/DwDhrm7)
+-   @Ramanda-230040052
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Deployment
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Untuk memulai Project ini clone Repository ini
 
-## Learning Laravel
+```bash
+  git clone https://github.com/zeppyx13/RestFull-API.git
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Setup Laravel
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Copy env file
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+  cp .env.example .env
+```
 
-## Laravel Sponsors
+Generate Key:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+  php artisan key:generate
+```
 
-### Premium Partners
+### Setup Data Base
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Atur env file pada database lalu lakukan
 
-## Contributing
+```bash
+  php artisan migrate:fresh --seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## API Reference
 
-## Code of Conduct
+User Super Admin
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Email : gn.nanda0@gmail.com
 
-## Security Vulnerabilities
+#### Password: Admin#1234
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Base URL
 
-## License
+```http
+  http://localhost:8000/api
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Admin Endpoint
+
+Endpoint admin dapat melakukan Regsiter,Login, dan cek user yang login. Login disini sangat penting untuk mendapat Token,yang berfungsi untuk Student Endpoint.
+
+### Register
+
+```http
+  POST /auth
+```
+
+| Parameter  | Type     | Description                     |
+| :--------- | :------- | :------------------------------ |
+| `email`    | `string` | **Required**. Email Pengguna    |
+| `password` | `string` | **Required**. Password Pengguna |
+| `name`     | `string` | **Required**. Nama Pengguna     |
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+{
+    "data": {
+        "id": 2,
+        "email": "gungnands@gmail.com",
+        "name": "Gung Nanda"
+    }
+}
+```
+
+Error:
+
+```JSON
+{
+    "errors": {
+        "email": [
+            "The email has already been taken."
+        ]
+    }
+}
+```
+
+### Login
+
+```http
+  POST /auth/login
+```
+
+| Parameter  | Type     | Description                     |
+| :--------- | :------- | :------------------------------ |
+| `email`    | `string` | **Required**. Email Pengguna    |
+| `password` | `string` | **Required**. Password Pengguna |
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+{
+    "data": {
+        "id": 1,
+        "email": "gn.nanda0@gmail.com",
+        "name": "Gung Nanda",
+        "token": "b82e21a9-720d-4b6d-80b3-efd7d437609a"
+    }
+}
+```
+
+Error:
+
+```JSON
+{
+    "errors": {
+        "message": [
+            "email or password wrong"
+        ]
+    }
+}
+```
+
+### Get Current User
+
+```http
+   GET /auth/me
+```
+
+sertakan Token yang di dapat saat login pada Header Authorization
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+{
+    "data": {
+        "id": 1,
+        "email": "gn.nanda0@gmail.com",
+        "name": "Gung Nanda",
+        "token": "b82e21a9-720d-4b6d-80b3-efd7d437609a"
+    }
+}
+```
+
+Error:
+
+```JSON
+{
+    "errors": {
+        "message": [
+            "unauthorized"
+        ]
+    }
+}
+```
+
+## Student Endpoint
+
+Endpoint Student ini dapat melakukan CRUD Student. Sebelum dapat melakukan akses ke Endpoint ini harus login untuk mendapatkan token Authorization, yang diletakan pada Header.
+![Header SS](https://gungnanda.com/nota/assets/img/img1.png)
+
+### Get All Student
+
+```http
+   GET /students/
+```
+
+Sertakan Token yang di dapat saat login pada Header Authorization
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+[
+    {
+        "id": 1,
+        "nim": "230040269",
+        "email": "jagaraga.palastri@example.com",
+        "name": "Rusman Mahendra",
+        "address": "Psr. Acordion No. 631, Makassar 39388, Sumsel",
+        "created_at": "2025-06-26T08:01:35.000000Z",
+        "updated_at": "2025-06-26T08:01:35.000000Z"
+    },
+    {
+        "id": 2,
+        "nim": "230040235",
+        "email": "intan35@example.net",
+        "name": "Nugraha Saputra",
+        "address": "Psr. Tangkuban Perahu No. 735, Pematangsiantar 95581, Kalbar",
+        "created_at": "2025-06-26T08:01:35.000000Z",
+        "updated_at": "2025-06-26T08:01:35.000000Z"
+    }
+]
+```
+
+Error:
+
+```JSON
+{
+    "errors": {
+        "message": [
+            "unauthorized"
+        ]
+    }
+}
+```
+
+### Get Student By NIM
+
+```http
+   GET /students/{nim}
+```
+
+Exemple hit endpoint:
+
+```http
+   http://localhost:8000/api/students/230040028
+```
+
+Sertakan Token yang di dapat saat login pada Header Authorization
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+{
+    "data": {
+        "nim": "230040028",
+        "email": "Zayuran@gmail.com",
+        "name": "Gung Nanda",
+        "address": "Jln Tangkubhan Perahu Blok 1 NO 16f"
+    }
+}
+```
+
+Error:
+
+```JSON
+{
+    "errors": {
+        "NIM": [
+            "NIM not found"
+        ]
+    }
+}
+```
+
+### Create Student
+
+```http
+   POST /students/
+```
+
+Sertakan Token yang di dapat saat login pada Header Authorization
+| Parameter | Type | Description |
+| :-------- | :------- | :------------------------- |
+| `nim` | `string` | **Required**. Nim Mahasiswa |
+| `email` | `string` | **Required**. Email Mahasiswa |
+| `name` | `string` | **Required**. Nama Mahasiswa |
+| `addres` | `string` | **Required**. Alamat mahasiswa |
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+{
+    "data": {
+        "nim": "230040028",
+        "email": "Zayuran@gmail.com",
+        "name": "Gung Nanda",
+        "address": "Jln Tangkubhan Perahu Blok 1 NO 16f"
+    }
+}
+```
+
+Error:
+
+```JSON
+{
+    "errors": {
+        "nim": [
+            "The nim has already been taken."
+        ],
+        "email": [
+            "The email has already been taken."
+        ],
+        "address": [
+            "The address field is required."
+        ]
+    }
+}
+```
+
+### Update Student
+
+```http
+   Put /students/{nim}
+```
+
+Exemple hit endpoint:
+
+```http
+   http://localhost:8000/api/students/230040028?name=Gung Nanda
+```
+
+Sertakan Token yang di dapat saat login pada Header Authorization
+| Parameter | Type | Description |
+| :-------- | :------- | :------------------------- |
+| `nim` | `string` | Nim Mahasiswa |
+| `email` | `string` | Email Mahasiswa |
+| `name` | `string` | Nama Mahasiswa |
+| `addres` | `string` | Alamat mahasiswa |
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+{
+    "data": {
+        "nim": "230040028",
+        "email": "Zayuran@gmail.com",
+        "name": "Gung Nanda",
+        "address": "Jln Tangkubhan Perahu Blok 1 NO 16f"
+    }
+}
+```
+
+Error:
+
+```JSON
+{
+    "errors": {
+        "name": [
+            "The name field must be a string."
+        ]
+    }
+}
+```
+
+### Delete Student
+
+```http
+   Delete /students/{nim}
+```
+
+Exemple hit endpoint:
+
+```http
+   http://localhost:8000/api/students/230040028
+```
+
+#### Exemple Output:
+
+Succes:
+
+```JSON
+{
+    "message": "Student deleted successfully"
+}
+```
+
+Error:
+
+```JSON
+{
+    "error": "Student not found"
+}
+```
+
+## Badges
+
+License:
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)

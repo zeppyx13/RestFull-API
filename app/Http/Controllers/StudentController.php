@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
@@ -35,5 +36,24 @@ class StudentController extends Controller
         $student = new Student($data);
         $student->save();
         return(new StudentResource($student))->response()->setStatusCode(201);
+    }
+    public function update(UpdateStudentRequest $request, $id): JsonResponse
+    {
+        $data = $request->validated();
+        $student = Student::where('nim', $id)->first();
+        if (!$student) {
+            return response()->json(['error' => 'Student not found'], 404);
+        }
+        $student->update($data);
+        return(new StudentResource($student))->response()->setStatusCode(200);
+    }
+    public function delete($id): JsonResponse
+    {
+        $student = Student::where('nim', $id)->first();
+        if (!$student) {
+            return response()->json(['error' => 'Student not found'], 404);
+        }
+        $student->delete();
+        return response()->json(['message' => 'Student deleted successfully'], 200);
     }
 }

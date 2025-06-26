@@ -26,10 +26,10 @@ class StoreStudentRequest extends FormRequest
             'nim' => 'required|string|max:10|unique:students,nim',
             'email' => 'required|email|max:35|unique:students,email',
             'name' => 'required|string|max:35',
-            'address' => 'nullable|string|max:255',
+            'address' => 'required|string|max:255',
         ];
     }
-        protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response([
             "errors" => $validator->getMessageBag()

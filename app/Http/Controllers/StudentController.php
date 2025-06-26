@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentResource;
+use App\Http\Resources\UserResource;
 use App\Models\Student;
+use App\Models\User;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
 class StudentController extends Controller
@@ -15,34 +18,52 @@ class StudentController extends Controller
         $students = Student::all();
         return response()->json($students);
     }
-    public function getById($id)
+    public function getById($id): StudentResource
     {
         // find by nim
         $student = Student::where('nim', $id)->first();
         if (!$student) {
-            return response()->json(['error' => 'Student not found'], 404);
+            throw new HttpResponseException(response([
+                "errors" => [
+                    "NIM" => [
+                        "NIM not found"
+                    ]
+                ]
+            ], 404));
         }
-        return response()->json($student);
+        return new StudentResource($student);
     }
-    public function create(StoreStudentRequest $request): JsonResponse
+    public function create(StoreStudentRequest $request): StudentResource
     {
         $data = $request->validated();
         if (Student::where('nim', $data['nim'])->exists()) {
-            return response()->json(['error' => 'NIM already exists'], 400);
+            throw new HttpResponseException(response([
+                "errors" => [
+                    "NIM" => [
+                        "NIM already exists"
+                    ]
+                ]
+            ], 400));
         }
         if (Student::where('email', $data['email'])->exists()) {
-            return response()->json(['error' => 'Email already exists'], 400);
+            throw new HttpResponseException(response([
+                "errors" => [
+                    "Email" => [
+                        "Email already exists"
+                    ]
+                ]
+            ], 400));
         }
         $student = new Student($data);
         $student->save();
-        return(new StudentResource($student))->response()->setStatusCode(201);
+        return new StudentResource($student);
     }
     public function update(UpdateStudentRequest $request, $id): JsonResponse
     {
         $data = $request->validated();
         $student = Student::where('nim', $id)->first();
         if (!$student) {
-            return response()->json(['error' => 'Student not found'], 404);
+            throw new HttpResponseException(response()->json(['error' => 'Student not found'], 404));
         }
         $student->update($data);
         return(new StudentResource($student))->response()->setStatusCode(200);
@@ -51,7 +72,7 @@ class StudentController extends Controller
     {
         $student = Student::where('nim', $id)->first();
         if (!$student) {
-            return response()->json(['error' => 'Student not found'], 404);
+            throw new HttpResponseException(response()->json(['error' => 'Student not found'], 404));
         }
         $student->delete();
         return response()->json(['message' => 'Student deleted successfully'], 200);

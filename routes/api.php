@@ -21,4 +21,5 @@ Route::post('/auth/login', [UserController::class, 'login']);
 Route::middleware(ApiAuthMiddleware::class)->group(function () {
     Route::get('/auth/me', [UserController::class, 'get']);
     Route::get('/students', [StudentController::class, 'get']);
+    Route::get('/students/{id}', [StudentController::class, 'getById']);
 });

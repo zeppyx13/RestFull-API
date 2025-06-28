@@ -63,11 +63,11 @@ Endpoint admin dapat melakukan Regsiter,Login, dan cek user yang login. Login di
   POST /auth
 ```
 
-| Parameter  | Type     | Description                     |
-| :--------- | :------- | :------------------------------ |
-| `email`    | `string` | **Required**. Email Pengguna    |
-| `password` | `string` | **Required**. Password Pengguna |
-| `name`     | `string` | **Required**. Nama Pengguna     |
+| Parameter  | Type     | Required | Description       |
+| ---------- | -------- | -------- | ----------------- |
+| `email`    | `string` | Yes      | Email Pengguna    |
+| `password` | `string` | Yes      | Password Pengguna |
+| `name`     | `string` | Yes      | Nama Pengguna     |
 
 #### Exemple Output:
 
@@ -101,10 +101,10 @@ Error:
   POST /auth/login
 ```
 
-| Parameter  | Type     | Description                     |
-| :--------- | :------- | :------------------------------ |
-| `email`    | `string` | **Required**. Email Pengguna    |
-| `password` | `string` | **Required**. Password Pengguna |
+| Parameter  | Type     | Required | Description       |
+| ---------- | -------- | -------- | ----------------- |
+| `email`    | `string` | Yes      | Email Pengguna    |
+| `password` | `string` | Yes      | Password Pengguna |
 
 #### Exemple Output:
 
@@ -268,12 +268,12 @@ Error:
 ```
 
 Sertakan Token yang di dapat saat login pada Header Authorization
-| Parameter | Type | Description |
-| :-------- | :------- | :------------------------- |
-| `nim` | `string` | **Required**. Nim Mahasiswa |
-| `email` | `string` | **Required**. Email Mahasiswa |
-| `name` | `string` | **Required**. Nama Mahasiswa |
-| `addres` | `string` | **Required**. Alamat mahasiswa |
+| Parameter | Type | Required | Description |
+|-----------|----------|----------|---------------------|
+| `nim` | `string` | Yes | NIM Mahasiswa |
+| `email` | `string` | Yes | Email Mahasiswa |
+| `name` | `string` | Yes | Nama Mahasiswa |
+| `address` | `string` | Yes | Alamat Mahasiswa |
 
 #### Exemple Output:
 
@@ -321,12 +321,12 @@ Exemple hit endpoint:
 ```
 
 Sertakan Token yang di dapat saat login pada Header Authorization
-| Parameter | Type | Description |
-| :-------- | :------- | :------------------------- |
-| `nim` | `string` | Nim Mahasiswa |
-| `email` | `string` | Email Mahasiswa |
-| `name` | `string` | Nama Mahasiswa |
-| `addres` | `string` | Alamat mahasiswa |
+| Parameter | Type | Required | Description |
+|-----------|----------|----------|---------------------|
+| `nim` | `string` | disabled | NIM Mahasiswa |
+| `email` | `string` | nullable | Email Mahasiswa |
+| `name` | `string` | nullable | Nama Mahasiswa |
+| `address` | `string` | nullable | Alamat Mahasiswa |
 
 #### Exemple Output:
 
